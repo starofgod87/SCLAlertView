@@ -101,6 +101,13 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  */
 @property (nonatomic, assign) BOOL shouldDismissOnTapOutside;
 
+/** Invoke validation on text change
+ *
+ * A boolean value that determines invoking validation block when textfield change.
+ * (Default: NO)
+ */
+@property (nonatomic, assign) BOOL shouldInvokeValidationOnTextfieldChange;
+
 /** Sound URL
  *
  * Holds the sound NSURL path.

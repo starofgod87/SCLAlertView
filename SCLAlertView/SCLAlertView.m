@@ -497,6 +497,7 @@ SCLTimerDisplay *buttonTimer;
     SCLTextView *txt = [[SCLTextView alloc] init];
     txt.font = [UIFont fontWithName:_bodyTextFontFamily size:_bodyFontSize];
     txt.delegate = self;
+    [txt addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     // Update view height
     self.windowHeight += txt.bounds.size.height + 10.0f;
@@ -539,6 +540,17 @@ SCLTimerDisplay *buttonTimer;
 }
 
 # pragma mark - UITextFieldDelegate
+//invoke validation block when textfield change
+- (void)textFieldDidChange:(id)sender {
+    if (!self.shouldInvokeValidationOnTextfieldChange) {
+        return;
+    }
+    for (SCLButton* btn in _buttons) {
+        if (btn.validationBlock) {
+            btn.validationBlock();
+        }
+    }
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
