@@ -1230,6 +1230,16 @@ SCLTimerDisplay *buttonTimer;
         [self.previousWindow makeKeyAndVisible];
         self.previousWindow = nil;
     }
+    
+    //force close keyboard
+    for(SCLTextView *txt in _inputs)
+    {
+        // Check if there is any keyboard on screen and dismiss
+        if (txt.editing)
+        {
+            [txt resignFirstResponder];
+        }
+    }
 }
 
 #pragma mark - Hide Animations
