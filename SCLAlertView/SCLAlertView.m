@@ -205,9 +205,11 @@ SCLTimerDisplay *buttonTimer;
     // Circle View
     _circleViewBackground.backgroundColor = [UIColor whiteColor];
     _circleViewBackground.layer.cornerRadius = _circleViewBackground.frame.size.height / 2;
+    _circleViewBackground.layer.masksToBounds = YES;
     CGFloat x = (kCircleHeightBackground - kCircleHeight) / 2;
     _circleView.frame = CGRectMake(x, x, kCircleHeight, kCircleHeight);
     _circleView.layer.cornerRadius = _circleView.frame.size.height / 2;
+    _circleView.layer.masksToBounds = YES;
     x = (kCircleHeight - _circleIconHeight) / 2;
     _circleIconImageView.frame = CGRectMake(x, x, _circleIconHeight, _circleIconHeight);
     [_circleViewBackground addSubview:_circleView];
@@ -323,7 +325,11 @@ SCLTimerDisplay *buttonTimer;
     {
         // Text fields
         CGFloat y = (_labelTitle.text == nil) ? (kCircleHeight - 20.0f) : 74.0f;
-        y += _subTitleHeight + 14.0f;
+        //only plus if there is subtitle
+        if (_subTitleHeight != 0) {
+            y += _subTitleHeight + 14.0f;
+        }
+        
         for (SCLTextView *textField in _inputs)
         {
             textField.frame = CGRectMake(12.0f, y, _windowWidth - 24.0f, textField.frame.size.height);
