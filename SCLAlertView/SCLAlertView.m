@@ -1510,4 +1510,8 @@ SCLTimerDisplay *buttonTimer;
     self.circleIconImageView.image = image;
 }
 
+- (UIImageView*)getAlertImageView {
+    return self.circleIconImageView;
+}
+
 @end

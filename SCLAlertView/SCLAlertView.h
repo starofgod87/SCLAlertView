@@ -400,6 +400,7 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
 - (void)showWaiting:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration;
 
 - (void)setAlertImage:(UIImage*)image;
+- (UIImageView*)getAlertImageView;
 
 
 @end
