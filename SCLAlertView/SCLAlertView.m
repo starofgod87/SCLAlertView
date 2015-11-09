@@ -1506,4 +1506,8 @@ SCLTimerDisplay *buttonTimer;
     }];
 }
 
+- (void)setAlertImage:(UIImage*)image {
+    self.circleIconImageView.image = image;
+}
+
 @end
