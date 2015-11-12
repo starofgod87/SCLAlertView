@@ -182,6 +182,7 @@ SCLTimerDisplay *buttonTimer;
     // Init
     _labelTitle = [[UILabel alloc] init];
     _viewText = [[UITextView alloc] init];
+    _viewText.dataDetectorTypes = UIDataDetectorTypeLink;
     _contentView = [[UIView alloc] init];
     _circleView = [[UIView alloc] init];
     _circleViewBackground = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kCircleHeightBackground, kCircleHeightBackground)];
