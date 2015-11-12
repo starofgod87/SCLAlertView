@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "SCLAlertView.h"
+#import "SCLAlertViewStyleKit.h"
 
 @interface ViewController ()
 
@@ -38,6 +39,12 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
 {
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
     
+    alert.shouldUsingCenterImage = YES;
+    alert.centerImageView.image = [SCLAlertViewStyleKit imageOfWarning];
+    alert.circleViewBackground.hidden = YES;
+    
+    [alert.centerImageIndicator startAnimating];
+    
     SCLButton *button = [alert addButton:@"First Button" target:self selector:@selector(firstButton)];
     
     button.buttonFormatBlock = ^NSDictionary* (void)
@@ -64,6 +71,8 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
 - (IBAction)showError:(id)sender
 {
     SCLAlertView *alert = [[SCLAlertView alloc] init];
+    alert.shouldUsingCenterImage = YES;
+    alert.centerImageView.image = [SCLAlertViewStyleKit imageOfWarning];
     
     [alert showError:self title:@"Hold On..."
             subTitle:@"You have not saved your Submission yet. Please save the Submission before accessing the Responses list. Blah de blah de blah, blah. Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah."
@@ -117,6 +126,8 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
     SCLAlertView *alert = [[SCLAlertView alloc] init];
     
     alert.backgroundViewColor = [UIColor cyanColor];
+    alert.shouldUsingCenterImage = YES;
+    alert.centerImageView.image = [SCLAlertViewStyleKit imageOfCross];
     
     [alert setTitleFontFamily:@"Superclarendon" withSize:20.0f];
     [alert setBodyTextFontFamily:@"TrebuchetMS" withSize:14.0f];

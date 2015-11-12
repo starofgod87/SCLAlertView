@@ -180,6 +180,8 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  */
 @property (nonatomic) CGFloat circleIconHeight;
 
+@property (nonatomic, strong) UIView *circleViewBackground;
+
 /** Set SCLAlertView extension bounds.
  *
  * Set new bounds (EXTENSION ONLY)
@@ -191,6 +193,16 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  * Status bar hidden
  */
 @property (nonatomic) BOOL statusBarHidden;
+
+@property (nonatomic) BOOL shouldUsingCenterImage;
+
+@property (nonatomic) UIImageView* centerImageView;
+
+@property (nonatomic) UIActivityIndicatorView* centerImageIndicator;
+
+@property (nonatomic) CGFloat centerImageHeight;
+
+@property (nonatomic) CGFloat centerImageWidth;
 
 /** Set status bar style.
  *
@@ -401,6 +413,7 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
 
 - (void)setAlertImage:(UIImage*)image;
 - (UIImageView*)getAlertImageView;
+
 
 
 @end

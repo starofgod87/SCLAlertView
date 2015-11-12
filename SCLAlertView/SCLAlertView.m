@@ -30,7 +30,6 @@
 @property (nonatomic, strong) NSMutableArray *buttons;
 @property (nonatomic, strong) UIImageView *circleIconImageView;
 @property (nonatomic, strong) UIView *circleView;
-@property (nonatomic, strong) UIView *circleViewBackground;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) UIImageView *backgroundView;
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
@@ -67,6 +66,7 @@ CGFloat kCircleHeightBackground;
 CGFloat kActivityIndicatorHeight;
 CGFloat kTitleTop;
 CGFloat kTitleHeight;
+CGFloat kCenterImageHeightGap;
 
 // Timer
 NSTimer *durationTimer;
@@ -155,6 +155,7 @@ SCLTimerDisplay *buttonTimer;
     kActivityIndicatorHeight = 40.0f;
     kTitleTop = 24.0f;
     kTitleHeight = 40.0f;
+    kCenterImageHeightGap = 10.f;
     self.subTitleY = 70.0f;
     self.subTitleHeight = 90.0f;
     self.circleIconHeight = 20.0f;
@@ -167,6 +168,8 @@ SCLTimerDisplay *buttonTimer;
     self.hideAnimationType = FadeOut;
     self.showAnimationType = SlideInFromTop;
     self.backgroundType = Shadow;
+    self.centerImageWidth = _windowWidth - 8.0f;
+    self.centerImageHeight = 9.f/16*self.centerImageWidth;
     
     // Font
     _titleFontFamily = @"HelveticaNeue";
@@ -186,6 +189,8 @@ SCLTimerDisplay *buttonTimer;
     _backgroundView = [[UIImageView alloc]initWithFrame:[self mainScreenFrame]];
     _buttons = [[NSMutableArray alloc] init];
     _inputs = [[NSMutableArray alloc] init];
+    self.centerImageView = [[UIImageView alloc] init];
+    self.centerImageIndicator = [[UIActivityIndicatorView alloc] init];
     
     // Add Subviews
     [self.view addSubview:_contentView];
@@ -200,6 +205,8 @@ SCLTimerDisplay *buttonTimer;
     _contentView.layer.masksToBounds = YES;
     _contentView.layer.borderWidth = 0.5f;
     [_contentView addSubview:_labelTitle];
+    [_contentView addSubview:self.centerImageView];
+    [_contentView addSubview:self.centerImageIndicator];
     [_contentView addSubview:_viewText];
     
     // Circle View
@@ -220,6 +227,13 @@ SCLTimerDisplay *buttonTimer;
     _labelTitle.textAlignment = NSTextAlignmentCenter;
     _labelTitle.font = [UIFont fontWithName:_titleFontFamily size:_titleFontSize];
     _labelTitle.frame = CGRectMake(12.0f, kTitleTop, _windowWidth - 24.0f, kTitleHeight);
+    
+    // Center Image
+    self.centerImageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.centerImageView.frame = CGRectMake(4, 0, self.centerImageWidth, self.centerImageHeight);
+    
+    // Center Image Indicator
+    self.centerImageIndicator.hidesWhenStopped = YES;
     
     // View text
     _viewText.editable = NO;
@@ -323,11 +337,17 @@ SCLTimerDisplay *buttonTimer;
     }
     
     {
+        //Center image indicator
+        self.centerImageIndicator.center = self.centerImageView.center;
+        
         // Text fields
         CGFloat y = (_labelTitle.text == nil) ? (kCircleHeight - 20.0f) : 74.0f;
         //only plus if there is subtitle
         if (_subTitleHeight != 0) {
             y += _subTitleHeight + 14.0f;
+        }
+        if (self.shouldUsingCenterImage) {
+            y += self.centerImageHeight + kCenterImageHeightGap;
         }
         
         for (SCLTextView *textField in _inputs)
@@ -807,6 +827,15 @@ SCLTimerDisplay *buttonTimer;
         [_labelTitle removeFromSuperview];
         
         _subTitleY = kCircleHeight - 20;
+    }
+    
+    if (self.shouldUsingCenterImage) {
+        self.centerImageView.frame = CGRectMake(4, _subTitleY, self.centerImageWidth, self.centerImageHeight);
+        _subTitleY += self.centerImageHeight + kCenterImageHeightGap;
+        self.windowHeight += self.centerImageHeight + kCenterImageHeightGap;
+    }
+    else  {
+        [self.centerImageView removeFromSuperview];
     }
     
     // Subtitle
