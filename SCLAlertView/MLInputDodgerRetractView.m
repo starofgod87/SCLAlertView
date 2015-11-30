@@ -37,7 +37,7 @@
         [button setImage:[UIImage imageNamed:[bundlePath stringByAppendingPathComponent:@"retract"]] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(retract) forControlEvents:UIControlEventTouchUpInside];
         
-        button.layer.cornerRadius = 5.0f;
+//        button.layer.cornerRadius = 5.0f;
         button.layer.masksToBounds = NO;
         button.backgroundColor = [UIColor clearColor];
         button.layer.backgroundColor = [UIColor colorWithRed:0.906 green:0.910 blue:0.918 alpha:1.000].CGColor;
