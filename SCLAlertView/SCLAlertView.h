@@ -13,6 +13,8 @@
 #endif
 #import "SCLButton.h"
 #import "SCLTextView.h"
+#import "MLInputDodger.h"
+
 
 typedef NSAttributedString* (^SCLAttributedFormatBlock)(NSString *value);
 typedef void (^DismissBlock)(void);

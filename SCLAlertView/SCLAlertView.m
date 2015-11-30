@@ -125,6 +125,7 @@ SCLTimerDisplay *buttonTimer;
 {
     [self removeObservers];
     [self restoreInteractivePopGesture];
+    [self.view unregisterAsDodgeViewForMLInputDodger];
 }
 
 - (void)addObservers
@@ -254,6 +255,9 @@ SCLTimerDisplay *buttonTimer;
     _labelTitle.textColor = UIColorFromHEX(0x4D4D4D); //Dark Grey
     _viewText.textColor = UIColorFromHEX(0x4D4D4D); //Dark Grey
     _contentView.layer.borderColor = UIColorFromHEX(0xCCCCCC).CGColor; //Light Grey
+    
+//    self.view.shiftHeightAsDodgeViewForMLInputDodger = 0.0f;
+    [self.view registerAsDodgeViewForMLInputDodger];
 }
 
 - (void)setupNewWindow
@@ -267,6 +271,7 @@ SCLTimerDisplay *buttonTimer;
     
     self.usingNewWindow = YES;
 }
+
 
 #pragma mark - Modal Validation
 
