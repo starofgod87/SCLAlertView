@@ -11,6 +11,9 @@ Pod::Spec.new do |spec|
   spec.platform           = :ios
   spec.ios.deployment_target = '6.0'
   spec.source             = { :git => "https://github.com/dogo/SCLAlertView.git", :tag => spec.version.to_s }
-  spec.source_files       = "SCLAlertView/*"
+  spec.source_files       = "SCLAlertView/*", "SCLAlertView/MLInputDodger.bundle/*"
+  spec.resource_bundles = {
+    'MLInputDodger' => ["SCLAlertView/MLInputDodger.bundle/*.png"] 
+}
   spec.requires_arc       = true
 end
