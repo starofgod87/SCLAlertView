@@ -42,6 +42,7 @@
         button.backgroundColor = [UIColor clearColor];
         button.layer.backgroundColor = [UIColor colorWithRed:0.906 green:0.910 blue:0.918 alpha:1.000].CGColor;
         button.layer.rasterizationScale = [UIScreen mainScreen].scale;
+        button.accessibilityIdentifier = @"Hide Keyboard Button";
         
         _button = button;
     }
