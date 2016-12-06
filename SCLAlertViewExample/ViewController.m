@@ -37,11 +37,12 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
 
 - (IBAction)showSuccess:(id)sender
 {
-    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    float screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindowWidth:0.8*screenWidth];
     
     alert.shouldUsingCenterImage = YES;
     alert.centerImageView.image = [SCLAlertViewStyleKit imageOfWarning];
-    alert.circleViewBackground.hidden = YES;
+    alert.circleViewBackground.hidden = NO;
     
     [alert.centerImageIndicator startAnimating];
     

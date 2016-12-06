@@ -22,7 +22,7 @@
 #define KEYBOARD_HEIGHT 80
 #define PREDICTION_BAR_HEIGHT 40
 #define ADD_BUTTON_PADDING 10.0f
-#define DEFAULT_WINDOW_WIDTH 240
+#define DEFAULT_WINDOW_WIDTH 300
 
 @interface SCLAlertView ()  <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
@@ -67,6 +67,7 @@ CGFloat kActivityIndicatorHeight;
 CGFloat kTitleTop;
 CGFloat kTitleHeight;
 CGFloat kCenterImageHeightGap;
+float scaleRatio;
 
 // Timer
 NSTimer *durationTimer;
@@ -148,20 +149,24 @@ SCLTimerDisplay *buttonTimer;
 
 - (void)setupViewWindowWidth:(CGFloat)windowWidth
 {
+    float widthRatio = windowWidth/DEFAULT_WINDOW_WIDTH;
+    float heightRatio = [[UIScreen mainScreen] bounds].size.height/667.f;
+    scaleRatio = MIN(widthRatio, heightRatio);
+    
     // Default values
-    kCircleTopPosition = -12.0f;
-    kCircleBackgroundTopPosition = -15.0f;
-    kCircleHeight = 56.0f;
-    kCircleHeightBackground = 62.0f;
-    kActivityIndicatorHeight = 40.0f;
-    kTitleTop = 24.0f;
-    kTitleHeight = 40.0f;
-    kCenterImageHeightGap = 10.f;
-    self.subTitleY = 70.0f;
-    self.subTitleHeight = 90.0f;
-    self.circleIconHeight = 20.0f;
+    kCircleTopPosition = -12.0f*scaleRatio;
+    kCircleBackgroundTopPosition = -23.f*scaleRatio;
+    kCircleHeight = 56.0f*scaleRatio;
+    kCircleHeightBackground = 62.0f*scaleRatio;
+    kActivityIndicatorHeight = 40.0f*scaleRatio;
+    kTitleTop = 24.0f*scaleRatio;
+    kTitleHeight = 40.0f*scaleRatio;
+    kCenterImageHeightGap = 10.f*scaleRatio;
+    self.subTitleY = 70.0f*scaleRatio;
+    self.subTitleHeight = 90.0f*scaleRatio;
+    self.circleIconHeight = 20.0f*scaleRatio;
     self.windowWidth = windowWidth;
-    self.windowHeight = 178.0f;
+    self.windowHeight = 178.0f*scaleRatio;
     self.shouldDismissOnTapOutside = NO;
     self.usingNewWindow = NO;
     self.canAddObservers = YES;
@@ -176,9 +181,9 @@ SCLTimerDisplay *buttonTimer;
     _titleFontFamily = @"HelveticaNeue";
     _bodyTextFontFamily = @"HelveticaNeue";
     _buttonsFontFamily = @"HelveticaNeue-Bold";
-    _titleFontSize = 20.0f;
-    _bodyFontSize = 14.0f;
-    _buttonsFontSize = 14.0f;
+    _titleFontSize = 20.0f*scaleRatio;
+    _bodyFontSize = 14.0f*scaleRatio;
+    _buttonsFontSize = 14.0f*scaleRatio;
     
     // Init
     _labelTitle = [[UILabel alloc] init];
@@ -203,7 +208,7 @@ SCLTimerDisplay *buttonTimer;
     
     // Content View
     _contentView.backgroundColor = [UIColor whiteColor];
-    _contentView.layer.cornerRadius = 5.0f;
+    _contentView.layer.cornerRadius = 5.0f*scaleRatio;
     _contentView.layer.masksToBounds = YES;
     _contentView.layer.borderWidth = 0.5f;
     [_contentView addSubview:_labelTitle];
@@ -256,7 +261,7 @@ SCLTimerDisplay *buttonTimer;
     _viewText.textColor = UIColorFromHEX(0x4D4D4D); //Dark Grey
     _contentView.layer.borderColor = UIColorFromHEX(0xCCCCCC).CGColor; //Light Grey
     
-//    self.view.shiftHeightAsDodgeViewForMLInputDodger = 0.0f;
+    //    self.view.shiftHeightAsDodgeViewForMLInputDodger = 0.0f;
     [self.view registerAsDodgeViewForMLInputDodger];
 }
 
@@ -347,10 +352,10 @@ SCLTimerDisplay *buttonTimer;
         self.centerImageIndicator.center = self.centerImageView.center;
         
         // Text fields
-        CGFloat y = (_labelTitle.text == nil) ? (kCircleHeight - 20.0f) : 74.0f;
+        CGFloat y = (_labelTitle.text == nil) ? (kCircleHeight - 20.0f) : 74.0f*scaleRatio;
         //only plus if there is subtitle
         if (_subTitleHeight != 0) {
-            y += _subTitleHeight + 14.0f;
+            y += _subTitleHeight + 14.0f*scaleRatio;
         }
         if (self.shouldUsingCenterImage) {
             y += self.centerImageHeight + kCenterImageHeightGap;
@@ -360,7 +365,7 @@ SCLTimerDisplay *buttonTimer;
         {
             textField.frame = CGRectMake(12.0f, y, _windowWidth - 24.0f, textField.frame.size.height);
             textField.layer.cornerRadius = 3.0f;
-            y += textField.frame.size.height + 10.0f;
+            y += textField.frame.size.height + 10.0f*scaleRatio;
         }
         
         // Buttons
@@ -368,7 +373,7 @@ SCLTimerDisplay *buttonTimer;
         {
             btn.frame = CGRectMake(12.0f, y, btn.frame.size.width, btn.frame.size.height);
             btn.layer.cornerRadius = 3.0f;
-            y += btn.frame.size.height + 10.0f;
+            y += btn.frame.size.height + 10.0f*scaleRatio;
         }
     }
 }
@@ -377,12 +382,12 @@ SCLTimerDisplay *buttonTimer;
 
 - (BOOL)prefersStatusBarHidden
 {
-  return self.statusBarHidden;
+    return self.statusBarHidden;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-  return self.statusBarStyle;
+    return self.statusBarStyle;
 }
 
 #pragma mark - Handle gesture
@@ -532,7 +537,11 @@ SCLTimerDisplay *buttonTimer;
     [txt addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     // Update view height
-    self.windowHeight += txt.bounds.size.height + 10.0f;
+    CGRect frame = txt.frame;
+    frame.size.height = frame.size.height*scaleRatio;
+    txt.frame = frame;
+    
+    self.windowHeight += txt.bounds.size.height + 10.0f*scaleRatio;
     
     if (title != nil)
     {
@@ -556,7 +565,7 @@ SCLTimerDisplay *buttonTimer;
 - (void)addCustomTextField:(UITextField *)textField
 {
     // Update view height
-    self.windowHeight += textField.bounds.size.height + 10.0f;
+    self.windowHeight += textField.bounds.size.height + 10.0f*scaleRatio;
     
     [_contentView addSubview:textField];
     [_inputs addObject:textField];
@@ -636,7 +645,10 @@ SCLTimerDisplay *buttonTimer;
     btn.titleLabel.font = [UIFont fontWithName:_buttonsFontFamily size:_buttonsFontSize];
     
     // Update view height
-    self.windowHeight += (btn.frame.size.height + ADD_BUTTON_PADDING);
+    CGRect frame = btn.frame;
+    frame.size.height = frame.size.height*scaleRatio;
+    btn.frame = frame;
+    self.windowHeight += (btn.frame.size.height + ADD_BUTTON_PADDING*scaleRatio);
     
     [_contentView addSubview:btn];
     [_buttons addObject:btn];
@@ -708,7 +720,7 @@ SCLTimerDisplay *buttonTimer;
     {
         [self hideView];
     }
-
+    
     if (btn.actionType == SCLBlock)
     {
         if (btn.actionBlock)
@@ -732,7 +744,7 @@ SCLTimerDisplay *buttonTimer;
     buttonIndex = MAX(buttonIndex, 0);
     buttonIndex = MIN(buttonIndex, [_buttons count]);
     
-    buttonTimer = [[SCLTimerDisplay alloc] initWithOrigin:CGPointMake(5, 5) radius:13 lineWidth:4];
+    buttonTimer = [[SCLTimerDisplay alloc] initWithOrigin:CGPointMake(5, 5) radius:13*scaleRatio lineWidth:4];
     buttonTimer.buttonIndex = buttonIndex;
     buttonTimer.reverse = reverse;
 }
@@ -1294,7 +1306,7 @@ SCLTimerDisplay *buttonTimer;
         [self.backgroundView removeFromSuperview];
         if(_usingNewWindow)
         {
-            // Remove current window            
+            // Remove current window
             [self.SCLAlertWindow setHidden:YES];
             self.SCLAlertWindow = nil;
         }
