@@ -53,7 +53,7 @@
         _countLabel = [[UILabel alloc] init];
         _countLabel.textColor = [UIColor whiteColor];
         _countLabel.backgroundColor = [UIColor clearColor];
-        _countLabel.font = [UIFont fontWithName: @"HelveticaNeue-Bold" size:12.0f];
+        _countLabel.font = [UIFont fontWithName: @"HelveticaNeue-Bold" size:12.0f*radius/13.f];
         _countLabel.textAlignment = NSTextAlignmentCenter;
         _countLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [self addSubview:_countLabel];

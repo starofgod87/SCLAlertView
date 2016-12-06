@@ -352,7 +352,7 @@ SCLTimerDisplay *buttonTimer;
         self.centerImageIndicator.center = self.centerImageView.center;
         
         // Text fields
-        CGFloat y = (_labelTitle.text == nil) ? (kCircleHeight - 20.0f) : 74.0f*scaleRatio;
+        CGFloat y = (_labelTitle.text == nil) ? (kCircleHeight - 20.0f*scaleRatio) : 74.0f*scaleRatio;
         //only plus if there is subtitle
         if (_subTitleHeight != 0) {
             y += _subTitleHeight + 14.0f*scaleRatio;
